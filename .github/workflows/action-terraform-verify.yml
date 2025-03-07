@@ -1,4 +1,4 @@
-name: Validate Terraform Formatting
+name: Validate Terraform Formatting and Configuration
 
 on:
   pull_request:
@@ -26,3 +26,22 @@ jobs:
 
       - name: Run Terraform fmt check on all files
         run: terraform fmt -check -recursive
+
+  terraform-validate:
+    runs-on: ubuntu-latest
+    name: Terraform Validation Check
+    needs: terraform-fmt
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.4
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Validate Terraform Configuration
+        run: terraform validate
