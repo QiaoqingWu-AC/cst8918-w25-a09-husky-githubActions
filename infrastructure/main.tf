@@ -16,7 +16,7 @@ provider "azurerm" {
 
 # Define the resource group in Azure
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.labelPrefix}-a09-rg"
+  name      "${var.labelPrefix}-a09-rg"
   location = var.region
 }
 
