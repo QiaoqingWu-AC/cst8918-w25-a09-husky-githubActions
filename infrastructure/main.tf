@@ -15,10 +15,10 @@ provider "azurerm" {
 }
 
 # Define the resource group in Azure
-resource "azurerm_resource_group" "rg" {
-  name      "${var.labelPrefix}-a09-rg"
+resource "azurerm_resource_group" "rg" (
+  name     = "${var.labelPrefix}-a09-rg"
   location = var.region
-}
+)
 
 # Define a storage account
 resource "azurerm_storage_account" "storage" {
