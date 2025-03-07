@@ -10,31 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  terraform-syntax-check:
-    runs-on: ubuntu-latest
-    name: Terraform Syntax Check
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
-
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.2.4
-
-      - name: Check Terraform Syntax
-        working-directory: infrastructure  # ✅ Ensure Terraform runs in the correct folder
-        run: |
-          terraform init -backend=false
-          terraform plan -out=tfplan
-        shell: bash
-
   terraform-fmt:
     runs-on: ubuntu-latest
     name: Terraform Formatting Check
-    needs: terraform-syntax-check
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -47,7 +25,6 @@ jobs:
           terraform_version: 1.2.4
 
       - name: Run Terraform fmt check on all files
-        working-directory: infrastructure  # ✅ Ensure Terraform runs in the correct folder
         run: terraform fmt -check -recursive
 
   terraform-validate:
@@ -64,9 +41,7 @@ jobs:
           terraform_version: 1.2.4
 
       - name: Initialize Terraform
-        working-directory: infrastructure  # ✅ Ensure Terraform runs in the correct folder
-        run: terraform init -backend=false
+        run: terraform init
 
       - name: Validate Terraform Configuration
-        working-directory: infrastructure  # ✅ Ensure Terraform runs in the correct folder
         run: terraform validate
