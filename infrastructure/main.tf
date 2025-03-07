@@ -26,5 +26,5 @@ resource "azurerm_storage_account" "storage" {
   name = "${var.labelPrefix}a09storage"
   location = var.region
   account_tier = "Standard"
-  account_replication_type = "LRS"
+  account_replication_type = LRS
 }
