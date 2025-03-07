@@ -1,14 +1,9 @@
-name: Validate Terraform Code
+name: Validate Terraform Formatting
 
 on:
-  push:
-    branches:
-      - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 
 permissions:
   id-token: write
@@ -30,6 +25,4 @@ jobs:
           terraform_version: 1.2.4
 
       - name: Run Terraform fmt check on all files
-        run: |
-          set -e
-          terraform fmt -check -recursive
+        run: terraform fmt -check -recursive
